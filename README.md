@@ -1,4 +1,9 @@
-# Device: POCO X5 Pro 5G (redwood)
+# hakios-sm7325: the POCO X5 Pro 5G (redwood) and its Snapdragon 778G (SM7325)
+
+One HakiOS device repository: the device (`device.conf`, `configs/`, its UEFI platform, firmware scripts) and its SoC family's
+layer (`soc/`: the SC7280 family, SM7325). `tools/hakios-device.py sync` in the common repository clones it into `devices/redwood/`.
+
+## The device
 
 Everything in HakiOS that belongs to one phone is here. The kernel, loader and user space above
 know nothing about the phone: addresses, interrupts, power rails and firmware come from its device
