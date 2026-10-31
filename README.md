@@ -13,6 +13,7 @@ tree and its Android. A port to another Qualcomm phone is another directory like
 |---|---|
 | SoC | Qualcomm Snapdragon 778G (SM7325, "yupik" in the device tree) |
 | UEFI for the phone | `uefi/`: a port of Mu-Silicium (a patch and files; `apply.sh` clones and applies, `export.sh` saves) |
+| U-Boot for the phone | `u-boot/files/`: its device tree (`sm7325-xiaomi-redwood.dts`), `hakios_redwood_defconfig` and environment, which `uefi/u-boot/apply.sh` lays over U-Boot (the common repository's `docs/u-boot.md`) |
 | Prebuilt UEFI images | `prebuilt/`: `SILICIUM_UEFI.fd`, `BootShim.bin`, the device tree `device-tree.dtb` (the phone's Android kernel's), `ramdisk`, `mkbootimg.py` |
 | The phone's firmware | **not in the repository**: `pull-firmware.sh` pulls it off your phone over `adb` into `fw-*/` at the top |
 | Tools | `tools/modem_firmware.py` (the modem image by the device tree), `tools/cellular_probe.py` (the modem's nodes in the device tree) |
