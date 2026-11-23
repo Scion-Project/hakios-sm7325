@@ -14,15 +14,15 @@
 #
 ################################################################################
 [Defines]
-  PLATFORM_NAME                  = redwood
+  PLATFORM_NAME                  = sm7325-device
   PLATFORM_GUID                  = 62B40F33-4011-4ACB-8348-1A6BB928C8A6
   PLATFORM_VERSION               = 0.1
   DSC_SPECIFICATION              = 0x00010005
-  OUTPUT_DIRECTORY               = Build/redwoodPkg
+  OUTPUT_DIRECTORY               = Build/SM7325DevicePkg
   SUPPORTED_ARCHITECTURES        = AARCH64
   BUILD_TARGETS                  = RELEASE|DEBUG
   SKUID_IDENTIFIER               = DEFAULT
-  FLASH_DEFINITION               = redwoodPkg/redwood.fdf
+  FLASH_DEFINITION               = SM7325DevicePkg/SM7325Device.fdf
   USE_CUSTOM_DISPLAY_DRIVER      = 0
 
   #
@@ -50,10 +50,10 @@
   # SMBIOS
   #
   gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemManufacturer|"Xiaomi"
-  gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemModel|"POCO X5 Pro 5G"
-  gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"redwood"
-  gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"POCO_X5_Pro_5G_redwood"
-  gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemBoardModel|"POCO X5 Pro 5G"
+  gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemModel|"SM7325 device"
+  gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"SM7325 device"
+  gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"SM7325_DEVICE"
+  gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemBoardModel|"SM7325 device"
 
   #
   # Simple Frame Buffer
@@ -76,12 +76,12 @@
   #
   # Memory Libraries
   #
-  MemoryMapLib|redwoodPkg/Library/MemoryMapLib/MemoryMapLib.inf
+  MemoryMapLib|SM7325DevicePkg/Library/MemoryMapLib/MemoryMapLib.inf
 
   #
   # QCOM Libraries
   #
-  ConfigurationMapLib|redwoodPkg/Library/ConfigurationMapLib/ConfigurationMapLib.inf
+  ConfigurationMapLib|SM7325DevicePkg/Library/ConfigurationMapLib/ConfigurationMapLib.inf
 
 [Components]
   #

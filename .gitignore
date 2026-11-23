@@ -1,0 +1,20 @@
+# Vendor firmware, extracted device data, and generated images stay local.
+/firmware/sm7325-device/*
+!/firmware/sm7325-device/README.md
+/uefi/files/Binaries/sm7325-device/*
+!/uefi/files/Binaries/sm7325-device/README.md
+/local-firmware/
+/local-build/
+/images/
+*.ipsw
+*.im4p
+DeviceTree*.bin
+identity.bin
+*.apfs
+*.dmg
+*.dtb
+*.dtbo
+*.mbn
+*.elf
+*.bin
+__pycache__/

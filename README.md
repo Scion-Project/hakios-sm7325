@@ -1,7 +1,12 @@
-# hakios-sm7325: the POCO X5 Pro 5G (redwood) and its Snapdragon 778G (SM7325)
+# hakios-sm7325: SM7325 device and Snapdragon 778G (SM7325)
 
 One HakiOS device repository: the device (`device.conf`, `configs/`, its UEFI platform, firmware scripts) and its SoC family's
-layer (`soc/`: the SC7280 family, SM7325). `tools/hakios-device.py sync` in the common repository clones it into `devices/redwood/`.
+layer (`soc/`: the SC7280 family, SM7325). `tools/hakios-device.py sync` in the common repository clones it into `devices/sm7325-device/`.
+
+## Documentation
+
+- [Build and integrate](DOCS/building.md)
+- [Storage map](DOCS/storage.md)
 
 ## The device
 
@@ -16,6 +21,8 @@ tree and its Android. A port to another Qualcomm phone is another directory like
 | U-Boot for the phone | `u-boot/files/`: its device tree (`sm7325-xiaomi-redwood.dts`), `hakios_redwood_defconfig` and environment, which `uefi/u-boot/apply.sh` lays over U-Boot (the common repository's `docs/u-boot.md`) |
 | Prebuilt UEFI images | `prebuilt/`: `SILICIUM_UEFI.fd`, `BootShim.bin`, the device tree `device-tree.dtb` (the phone's Android kernel's), `ramdisk`, `mkbootimg.py` |
 | The phone's firmware | **not in the repository**: `pull-firmware.sh` pulls it off your phone over `adb` into `fw-*/` at the top |
+| Board description for the current kernel | `sm7325-device/board.dts` and `sm7325-device/soc.dtsi` |
+| UEFI build inputs and local firmware | Generated/extracted files live in `firmware/sm7325-device/`, ignored by Git |
 | Tools | `tools/modem_firmware.py` (the modem image by the device tree), `tools/cellular_probe.py` (the modem's nodes in the device tree) |
 
 What the kernel does for this phone in particular is the drivers `drivers/*/hakios.*`
@@ -26,12 +33,12 @@ what to rewrite for another phone.
 ## Firmware
 
 ```sh
-devices/redwood/pull-firmware.sh      # the phone in Android, on adb
+./pull-firmware.sh      # phone in Android, connected with adb
 ```
 
-Pulls the GPU (`fw-gpu/`), Wi-Fi (`fw-wifi/`), the audio DSP (`fw-audio/`, battery and charging
-come through it), the vibration motor (`fw-haptic/`), the modem (`fw-modem/`, with `image/` for its
-TFTP) and the cameras (`fw-camera/`). All of it is the vendor's and stays out of git.
+Pulls GPU, Wi-Fi, audio DSP, haptic, touch, Bluetooth, and modem files into categories under
+`firmware/sm7325-device/`. The files stay on the developer machine and are excluded from commits.
+Run `scripts/link-firmware.sh /path/to/kernel` to connect kernel build inputs.
 
 ## Running
 
@@ -58,10 +65,9 @@ and is kept only as the worked example.
 
 ### Every soc_* argument
 
-What `tools/soc-args.py` reads from a phone's device tree, and where each comes from. The POCO
-X5 Pro's values (the kernel defaults) are shown; another phone's are generated into its `soc.args`.
+What `tools/soc-args.py` reads from a phone's device tree, and where each comes from. The SM7325 device's values (the kernel defaults) are shown; another phone's are generated into its `soc.args`.
 
-| Argument | Device-tree source | POCO value |
+| Argument | Device-tree source | SM7325 value |
 |---|---|---|
 | `soc_ipa_base` | `qcom,ipa` reg `ipa-base` + 0x40000 (the registers) | `0x1e40000` |
 | `soc_gsi_base` | `qcom,ipa` reg `gsi-base` | `0x1e04000` |
@@ -84,3 +90,11 @@ Still hardcoded (IPA-version specific, not per-phone within one IPA version): th
 layout and the SMEM filter-table item (`ipa_4_11_mem_part`), and the Qtime/resource-group values
 the IPA is programmed with. A phone on the same IPA (4.11) needs none of these changed; a different
 IPA version is a larger port.
+
+
+## Board description for the current kernel
+
+`sm7325-device/board.dts` and `sm7325-device/soc.dtsi` describe the phone for the newer board-table
+build. Point `HAKIOS_DEVICES` at this repository and run `tools/boards.py status sm7325-device` from
+the kernel checkout. The loader and kernel use the product name `sm7325-device`; Android fastboot
+continues to report Xiaomi's product identifier `redwood`.
